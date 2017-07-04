@@ -1,0 +1,14 @@
+SELECT
+    E.user_id, E.fixture_id, P.pick, P.source, 
+    F.score_home, F.score_away, 
+    CASE 
+		WHEN  Fixture.score_home = Fixture.score_away THEN 'empate' 
+		WHEN  Fixture.score_home > Fixture.score_away  THEN 'local' 
+		WHEN  Fixture.score_home < Fixture.score_away  THEN 'visitante'
+	END AS resultado
+FROM 
+	picks P 
+	INNER JOIN entries E
+		ON P.entry_id = E.id
+	INNER JOIN fixtures F
+		ON P.fixture_id = F.id
